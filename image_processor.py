@@ -9,9 +9,8 @@ def find_horizon(path, threshold=cv2.THRESH_BINARY + cv2.THRESH_OTSU, denoise=Tr
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 🔹 Добавляем медианное сглаживание для удаления звёзд (единичных точек)
     if denoise:
-        gray = cv2.medianBlur(gray, ksize=3)  # ksize=3 — достаточно для звёзд, не смажет горизонт
+        gray = cv2.medianBlur(gray, ksize=3)  
 
     _, thresh = cv2.threshold(gray, 0, 255, threshold)
 
