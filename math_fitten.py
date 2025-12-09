@@ -14,3 +14,5 @@ def fit_circle(data_points: np.array):
     r = np.sqrt(cx**2 + cy**2 - c)
 
     return cx, cy, r
+ 
+

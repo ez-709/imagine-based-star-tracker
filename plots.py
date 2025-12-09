@@ -5,13 +5,11 @@ import numpy as np
 def visualize_horizon(img, thresh, horizon_points, output, circle_params=None):
     plt.figure(figsize=(12, 5))
 
-    # 1. Оригинальное изображение
     plt.subplot(1, 2, 1)
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     plt.axis("off")
     plt.title("Оригинальное изображение")
 
-    # 2. Изображение с наложенной окружностью и углом крена
     overlay = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).copy()
     angle = 0.0
 
@@ -19,16 +17,15 @@ def visualize_horizon(img, thresh, horizon_points, output, circle_params=None):
         cx, cy, r = circle_params
         h, w = img.shape[:2]
 
-        # Безопасное вычисление y на левом и правом краю
-        def safe_y(x):
+        def y(x):
             dx = cx - x
             disc = r**2 - dx**2
             if disc < 0:
-                return cy  # или np.nan, но cy — нейтральное значение
-            return cy - np.sqrt(disc)  # нижняя дуга
+                return cy 
+            return cy - np.sqrt(disc)
 
-        y1 = safe_y(0)
-        y2 = safe_y(w - 1)
+        y1 = y(0)
+        y2 = y(w - 1)
 
         angle = np.degrees(np.arctan2(y2 - y1, w - 1 - 0))
 
